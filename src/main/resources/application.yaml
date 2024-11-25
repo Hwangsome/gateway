@@ -1,0 +1,26 @@
+#endpoints:
+#  dailydata:
+#    replay:
+#      enabled: false
+#      cacheRequestBean: CacheRequestBody
+#      replayRequestFilterBean: replayDailyDataShadowRequestsFilter
+#      getPercentage: 15.0
+#      updatePercentage: 15.0
+#      url: "aaa"
+
+
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: custom_filter_route
+          uri: http://localhost:8081
+          predicates:
+            - Path=/info
+          filters:
+            - RewritePath=/info, /test # 将请求路径 /info 重写为 /test
+
+            - name: Custom
+              args:
+                someParam: "exampleValue"
